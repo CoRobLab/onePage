@@ -1,0 +1,1084 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="CoRob - создаем роботов с ИИ-поведением для эмоционального вовлечения в креативных индустриях">
+    <meta name="keywords" content="когнитивная робототехника, ИИ, роботы, интерактивные инсталляции">
+    <title>CoRob | Когнитивная Робототехника - Оживляем неживое</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #6366f1; /* Indigo */
+            --primary-dark: #4f46e5;
+            --secondary: #ec4899; /* Pink */
+            --accent: #06b6d4; /* Cyan */
+            --dark: #0f172a; /* Slate-900 */
+            --dark-light: #1e293b; /* Slate-800 */
+            --text: #e2e8f0; /* Slate-200 */
+            --text-dim: #94a3b8; /* Slate-400 */
+            --success: #10b981; /* Green */
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: var(--dark);
+            color: var(--text);
+            overflow-x: hidden;
+            line-height: 1.6;
+            scroll-behavior: smooth;
+        }
+
+        /* Animated Background */
+        .bg-gradient {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: radial-gradient(circle at 20% 50%, rgba(99, 102, 241, 0.15) 0%, transparent 50%),
+                        radial-gradient(circle at 80% 80%, rgba(236, 72, 153, 0.15) 0%, transparent 50%),
+                        radial-gradient(circle at 40% 20%, rgba(6, 182, 212, 0.1) 0%, transparent 50%);
+            animation: gradientShift 20s ease infinite;
+        }
+
+        @keyframes gradientShift {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.8; transform: scale(1.1); }
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 1.5rem 5%;
+            background: rgba(15, 23, 42, 0.9);
+            backdrop-filter: blur(12px);
+            z-index: 1000;
+            border-bottom: 1px solid rgba(99, 102, 241, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        nav.scrolled {
+            padding: 1rem 5%;
+            background: rgba(15, 23, 42, 0.95);
+        }
+
+        .nav-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--text-dim);
+            text-decoration: none;
+            transition: color 0.3s;
+            font-size: 0.95rem;
+            position: relative;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--primary);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--text);
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 0 5%;
+            position: relative;
+        }
+
+        .hero-content {
+            max-width: 900px;
+            z-index: 10;
+        }
+
+        .hero h1 {
+            font-size: clamp(2.5rem, 7vw, 5rem);
+            font-weight: 800;
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(135deg, #fff 0%, var(--primary) 50%, var(--secondary) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: fadeInUp 1s ease;
+        }
+
+        .hero p {
+            font-size: clamp(1.1rem, 2vw, 1.4rem);
+            color: var(--text-dim);
+            margin-bottom: 2.5rem;
+            animation: fadeInUp 1s ease 0.2s backwards;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 1.5rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            animation: fadeInUp 1s ease 0.4s backwards;
+        }
+
+        .btn {
+            padding: 1rem 2.5rem;
+            border-radius: 12px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s;
+            display: inline-block;
+            font-size: 1rem;
+            cursor: pointer;
+            border: none;
+            outline: none;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: white;
+            box-shadow: 0 10px 30px rgba(99, 102, 241, 0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 15px 40px rgba(99, 102, 241, 0.4);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--text);
+            border: 2px solid var(--primary);
+        }
+
+        .btn-secondary:hover {
+            background: var(--primary);
+            color: white;
+        }
+
+        /* Floating Animation */
+        .floating-robot {
+            position: absolute;
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(99, 102, 241, 0.2), transparent);
+            animation: float 6s ease-in-out infinite;
+            pointer-events: none;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-30px) rotate(5deg); }
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Section Styles */
+        section {
+            padding: 8rem 5%;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .section-header h2 {
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .section-header p {
+            color: var(--text-dim);
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        /* Problem Section */
+        .problem-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .problem-card {
+            background: var(--dark-light);
+            padding: 2.5rem;
+            border-radius: 20px;
+            border: 1px solid rgba(99, 102, 241, 0.2);
+            transition: all 0.4s;
+        }
+
+        .problem-card:hover {
+            transform: translateY(-10px);
+            border-color: var(--primary);
+            box-shadow: 0 20px 60px rgba(99, 102, 241, 0.2);
+        }
+
+        .problem-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: var(--primary);
+        }
+
+        .problem-card p {
+            color: var(--text-dim);
+            line-height: 1.8;
+        }
+
+        /* Solution Section */
+        .solution {
+            background: linear-gradient(135deg, rgba(99, 102, 241, 0.05), rgba(236, 72, 153, 0.05));
+            border-radius: 40px;
+            padding: 5rem;
+        }
+
+        .solution-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .solution-text h3 {
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+            line-height: 1.2;
+        }
+
+        .solution-text p {
+            color: var(--text-dim);
+            font-size: 1.1rem;
+            margin-bottom: 1rem;
+        }
+
+        .solution-visual {
+            background: rgba(99, 102, 241, 0.1);
+            border-radius: 20px;
+            padding: 3rem;
+            text-align: center;
+            border: 2px dashed var(--primary);
+        }
+
+        .solution-visual p {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--primary);
+        }
+
+        /* Products Section */
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2.5rem;
+            margin-top: 3rem;
+        }
+
+        .product-card {
+            background: var(--dark-light);
+            border-radius: 24px;
+            overflow: hidden;
+            border: 1px solid rgba(99, 102, 241, 0.1);
+            transition: all 0.4s;
+            cursor: pointer;
+        }
+
+        .product-card:hover {
+            transform: scale(1.03);
+            border-color: var(--secondary);
+            box-shadow: 0 25px 80px rgba(236, 72, 153, 0.3);
+        }
+
+        .product-image {
+            height: 250px;
+            background: linear-gradient(135deg, rgba(99, 102, 241, 0.3), rgba(236, 72, 153, 0.3));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 4rem;
+            position: relative;
+            overflow: hidden;
+            text-shadow: 0 0 15px var(--secondary), 0 0 5px white; 
+        }
+
+        .product-image::before {
+            content: '';
+            position: absolute;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
+            animation: pulse 3s ease infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 0.5; }
+            50% { transform: scale(1.2); opacity: 0.8; }
+        }
+
+        .product-content {
+            padding: 2rem;
+        }
+
+        .product-content h3 {
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+            color: var(--primary);
+        }
+
+        .product-content p {
+            color: var(--text-dim);
+            line-height: 1.8;
+            margin-bottom: 1.5rem;
+        }
+
+        .product-tag {
+            display: inline-block;
+            padding: 0.5rem 1rem;
+            background: rgba(99, 102, 241, 0.2);
+            border-radius: 20px;
+            font-size: 0.85rem;
+            color: var(--primary);
+            margin-right: 0.5rem;
+            margin-top: 0.5rem;
+        }
+
+        /* Applications */
+        .applications-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .app-card {
+            text-align: center;
+            padding: 2rem;
+            background: rgba(99, 102, 241, 0.05);
+            border-radius: 20px;
+            transition: all 0.3s;
+        }
+
+        .app-card:hover {
+            background: rgba(99, 102, 241, 0.1);
+            transform: translateY(-5px);
+        }
+
+        .app-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            color: var(--accent);
+        }
+
+        .app-card h4 {
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+        }
+
+        /* Team Section */
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2.5rem;
+            margin-top: 3rem;
+        }
+
+        .team-card {
+            text-align: center;
+            padding: 2rem;
+            background: var(--dark-light);
+            border-radius: 20px;
+            border: 1px solid rgba(99, 102, 241, 0.2);
+            transition: all 0.3s;
+        }
+
+        .team-card:hover {
+            border-color: var(--primary);
+            box-shadow: 0 15px 50px rgba(99, 102, 241, 0.2);
+        }
+
+        .team-avatar {
+            width: 120px;
+            height: 120px;
+            margin: 0 auto 1.5rem;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+        }
+
+        .team-card h4 {
+            font-size: 1.4rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .team-card p {
+            color: var(--text-dim);
+            font-size: 0.95rem;
+        }
+
+        /* Contact Section Improvements */
+        .contact {
+            background: linear-gradient(135deg, rgba(99, 102, 241, 0.1), rgba(236, 72, 153, 0.1));
+            border-radius: 40px;
+            padding: 5rem;
+            text-align: center;
+        }
+
+        .contact h2 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .contact p {
+            font-size: 1.2rem;
+            color: var(--text-dim);
+            margin-bottom: 3rem;
+        }
+        
+        /* New Form Styles */
+        .contact-form {
+            max-width: 600px;
+            margin: 0 auto 3rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+            text-align: left;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .contact-form label {
+            margin-bottom: 0.5rem;
+            color: var(--text-dim);
+            font-size: 0.9rem;
+        }
+
+        .contact-form input,
+        .contact-form textarea {
+            padding: 1rem;
+            border-radius: 10px;
+            border: 1px solid var(--primary);
+            background: var(--dark-light);
+            color: var(--text);
+            font-size: 1rem;
+            transition: border-color 0.3s;
+            font-family: inherit;
+        }
+
+        .contact-form input:focus,
+        .contact-form textarea:focus {
+            outline: none;
+            border-color: var(--secondary);
+            box-shadow: 0 0 10px rgba(99, 102, 241, 0.5);
+        }
+
+        .contact-form textarea {
+            min-height: 150px;
+            resize: vertical;
+        }
+        
+        .contact-form .btn-primary {
+            width: 100%;
+            margin-top: 1rem;
+        }
+
+        .contact-info {
+            margin-top: 3rem;
+        }
+
+        .contact-info h3 {
+            color: var(--accent);
+            margin-bottom: 2rem;
+            font-size: 1.5rem;
+        }
+
+        .contact-method {
+            padding: 1.5rem 2.5rem;
+            background: var(--dark-light);
+            border-radius: 15px;
+            border: 1px solid rgba(99, 102, 241, 0.3);
+            transition: all 0.3s;
+            text-decoration: none;
+            color: var(--text);
+            display: inline-block;
+        }
+
+        .contact-method:hover {
+            border-color: var(--primary);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(99, 102, 241, 0.3);
+        }
+        
+        .contact-methods {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .contact-method span {
+            display: block;
+            font-size: 0.9rem;
+            color: var(--text-dim);
+            margin-bottom: 0.5rem;
+        }
+
+        .contact-method strong {
+            font-size: 1.2rem;
+            color: var(--primary);
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 3rem 5%;
+            color: var(--text-dim);
+            border-top: 1px solid rgba(99, 102, 241, 0.1);
+        }
+
+        footer a {
+            color: var(--primary);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        footer a:hover {
+            color: var(--secondary);
+        }
+
+        /* Success Message */
+        .success-message {
+            background: rgba(16, 185, 129, 0.1);
+            border: 1px solid var(--success);
+            color: var(--success);
+            padding: 1rem;
+            border-radius: 10px;
+            margin-bottom: 1rem;
+            display: none;
+        }
+
+        /* Loading Animation */
+        .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255,255,255,.3);
+            border-radius: 50%;
+            border-top-color: #fff;
+            animation: spin 1s ease-in-out infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .solution-content {
+                gap: 2rem;
+            }
+            
+            .solution, .contact {
+                padding: 3rem 2rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                position: fixed;
+                top: 0;
+                right: -100%;
+                width: 70%;
+                height: 100vh;
+                background: var(--dark);
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                transition: right 0.3s ease;
+                z-index: 1001;
+                border-left: 1px solid rgba(99, 102, 241, 0.2);
+            }
+
+            .nav-links.active {
+                right: 0;
+            }
+
+            .mobile-menu-btn {
+                display: block;
+                z-index: 1002;
+            }
+
+            .solution-content {
+                grid-template-columns: 1fr;
+            }
+
+            section {
+                padding: 4rem 5%;
+            }
+
+            .contact-methods {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .contact-method {
+                width: 100%;
+                max-width: 300px;
+            }
+
+            .cta-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .btn {
+                width: 100%;
+                max-width: 300px;
+                text-align: center;
+            }
+        }
+
+        /* Scroll Reveal Animation */
+        .reveal {
+            opacity: 0;
+            transform: translateY(50px);
+            transition: all 0.8s ease;
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Skip to main content for accessibility */
+        .skip-link {
+            position: absolute;
+            top: -40px;
+            left: 0;
+            background: var(--primary);
+            color: white;
+            padding: 8px;
+            z-index: 10000;
+            text-decoration: none;
+            border-radius: 0 0 4px 0;
+        }
+
+        .skip-link:focus {
+            top: 0;
+        }
+    </style>
+</head>
+<body>
+    <a href="#main-content" class="skip-link">Перейти к основному содержанию</a>
+    <div class="bg-gradient"></div>
+
+    <nav id="navbar">
+        <div class="nav-content">
+            <a href="#hero" class="logo">CoRob | Robotics</a>
+            <button class="mobile-menu-btn" aria-label="Открыть меню">☰</button>
+            <ul class="nav-links">
+                <li><a href="#hero">Главная</a></li>
+                <li><a href="#problem">Проблема</a></li>
+                <li><a href="#products">Продукты</a></li>
+                <li><a href="#team">Команда</a></li>
+                <li><a href="#contact" class="btn btn-primary" style="padding: 0.5rem 1rem;">Заявка</a></li>
+            </ul>
+        </div>
+    </nav>
+    
+    <main id="main-content">
+        <section id="hero" class="hero">
+            <div class="floating-robot" style="top: 20%; left: 10%;"></div>
+            <div class="floating-robot" style="bottom: 20%; right: 10%; animation-delay: 3s;"></div>
+            
+            <div class="hero-content">
+                <h1>КОГНИТИВНАЯ РОБОТОТЕХНИКА:<br>Оживляем неживое</h1>
+                <p>Мы создаём роботов с <strong>ИИ-поведением</strong> для эмоционального вовлечения в креативных индустриях. Преодолеваем «эффект зловещей долины» и строим <strong>доверие к технологиям будущего</strong>.</p>
+                <div class="cta-buttons">
+                    <a href="#contact" class="btn btn-primary">Обсудить проект</a>
+                    <a href="#products" class="btn btn-secondary">Наши работы</a>
+                </div>
+            </div>
+        </section>
+
+        <section id="problem">
+            <div class="section-header reveal">
+                <h2>Стандартные методы не работают</h2>
+                <p>Мозг запоминает только то, что вызывает сильную эмоцию, а технологии часто отталкивают.</p>
+            </div>
+
+            <div class="problem-grid">
+                <div class="problem-card reveal">
+                    <h3>📉 Низкая вовлечённость</h3>
+                    <p>Посетители проходят мимо: стандартные экспонаты и витрины не вызывают <strong>эмоционального якоря</strong> и быстро забываются.</p>
+                </div>
+
+                <div class="problem-card reveal">
+                    <h3>🤖 Эффект зловещей долины</h3>
+                    <p>Роботы часто выглядят холодно, жутковато или непредсказуемо. Это вызывает <strong>репутационные риски</strong> и снижает доверие.</p>
+                </div>
+
+                <div class="problem-card reveal">
+                    <h3>💼 Упущенная выручка</h3>
+                    <p>Без уникального эмоционального опыта теряется потенциальная аудитория, снижается время пребывания и <strong>конверсия в лояльность</strong>.</p>
+                </div>
+            </div>
+        </section>
+        
+        <section id="solution">
+            <div class="solution reveal">
+                <div class="solution-content">
+                    <div class="solution-text">
+                        <h3>Эмоциональный якорь через «живую» робототехнику</h3>
+                        <p>✨ <strong>Биовдохновлённый дизайн</strong> — наши роботы вдохновлены природой и эстетикой (Pixar, Disney), что создаёт <strong>тёплое и дружелюбное восприятие</strong>.</p>
+                        <p>🧠 <strong>Когнитивное ИИ-поведение</strong> — используем обучение с подкреплением (Reinforcement Learning) для <strong>естественных, экспрессивных движений</strong>.</p>
+                        <p>🎯 <strong>Уникальный опыт</strong> — гарантируем незабываемое первое впечатление, активирующее <strong>сарафанное радио</strong>.</p>
+                    </div>
+                    <div class="solution-visual">
+                        <p style="font-size: 4rem; margin-bottom: 1rem; color: var(--secondary);">🔬</p>
+                        <p>Разработано в Лаборатории CoRob <br>МГТУ им. Н. Э. Баумана</p>
+                        <p style="margin-top: 1rem; font-size: 0.9rem; color: var(--text-dim);">Апробировано на "Москва 2030" | Показано на Первом канале</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="products">
+            <div class="section-header reveal">
+                <h2>Наши продукты и инсталляции</h2>
+                <p>Готовые решения и индивидуальная разработка под ключ для ваших задач.</p>
+            </div>
+
+            <div class="products-grid">
+                <div class="product-card reveal">
+                    <div class="product-image">🦑</div>
+                    <div class="product-content">
+                        <h3>Робо-щупальце (TRL 5)</h3>
+                        <p>Биомеханический модуль с плавными движениями, идеальный для интерактивных арт-объектов, витрин и выставок.</p>
+                        <span class="product-tag">Готовый прототип</span>
+                        <span class="product-tag">Арт-инсталляция</span>
+                    </div>
+                </div>
+
+                <div class="product-card reveal">
+                    <div class="product-image">🐛</div>
+                    <div class="product-content">
+                        <h3>Механический червь</h3>
+                        <p>Многосегментный робот с органическими, вызывающими любопытство движениями. Отлично для музейных экспозиций.</p>
+                        <span class="product-tag">Прототип</span>
+                        <span class="product-tag">Музейный экспонат</span>
+                    </div>
+                </div>
+
+                <div class="product-card reveal">
+                    <div class="product-image">🪑</div>
+                    <div class="product-content">
+                        <h3>Шагающий стол (Концепт)</h3>
+                        <p>Футуристичная, когнитивная мебель. Создает незабываемый «вау-эффект» в офисных и event-пространствах.</p>
+                        <span class="product-tag">Концепт</span>
+                        <span class="product-tag">Корпоративный декор</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section>
+            <div class="section-header reveal">
+                <h2>Применение</h2>
+                <p>Индустрии, где наши решения создают максимальную ценность</p>
+            </div>
+
+            <div class="applications-grid">
+                <div class="app-card reveal" style="transition-delay: 0s;">
+                    <div class="app-icon">🎨</div>
+                    <h4>Музеи и галереи</h4>
+                    <p>Интерактивные экспонаты для повышения вовлечённости.</p>
+                </div>
+
+                <div class="app-card reveal" style="transition-delay: 0.1s;">
+                    <div class="app-icon">🎭</div>
+                    <h4>Креативные студии</h4>
+                    <p>Партнёрство в сложных проектах (TeamLab, Sila Sveta).</p>
+                </div>
+
+                <div class="app-card reveal" style="transition-delay: 0.2s;">
+                    <div class="app-icon">🛍️</div>
+                    <h4>Ритейл и Event</h4>
+                    <p>«Живые» витрины и стенды для привлечения клиентов.</p>
+                </div>
+
+                <div class="app-card reveal" style="transition-delay: 0.3s;">
+                    <div class="app-icon">🏢</div>
+                    <h4>Корпорации</h4>
+                    <p>Футуристичный декор офисов, презентаций и стендов.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="team">
+            <div class="section-header reveal">
+                <h2>Команда</h2>
+                <p>Эксперты в когнитивном моделировании, ML/RL и робототехнике из МГТУ им. Баумана</p>
+            </div>
+
+            <div class="team-grid">
+                <div class="team-card reveal">
+                    <div class="team-avatar">🧠</div>
+                    <h4>Роман Лятифов</h4>
+                    <p>Руководитель проекта<br>Аспирант, ML/RL-исследователь<br>Руководитель лаборатории CoRob</p>
+                </div>
+
+                <div class="team-card reveal">
+                    <div class="team-avatar">🤖</div>
+                    <h4>Егор Косыгин</h4>
+                    <p>Инженер-робототехник<br>Студент, 5 лет практического опыта</p>
+                </div>
+
+                <div class="team-card reveal">
+                    <div class="team-avatar">💻</div>
+                    <h4>Артём Николаев</h4>
+                    <p>ML-специалист<br>Магистр математики (ФИЦ ИУ РАН)</p>
+                </div>
+
+                <div class="team-card reveal">
+                    <div class="team-avatar">⚙️</div>
+                    <h4>Пётр Сафронов</h4>
+                    <p>Системный инженер<br>Аспирант кафедры РК9</p>
+                </div>
+
+                <div class="team-card reveal">
+                    <div class="team-avatar">🗂️</div>
+                    <h4>Дарья Дьячкова</h4>
+                    <p>Технический менеджер<br>Системный аналитик</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="contact">
+            <div class="contact reveal">
+                <h2>Давайте создадим что-то живое</h2>
+                <p>Начните с нами диалог о вашем проекте. Мы разрабатываем эмоциональные инсталляции под ключ, используя научный подход.</p>
+                
+                <div class="success-message" id="successMessage">
+                    Спасибо! Ваша заявка отправлена. Мы свяжемся с вами в ближайшее время.
+                </div>
+                
+                <form class="contact-form" id="contactForm">
+                    <div class="form-group">
+                        <label for="name">Ваше имя или название компании</label>
+                        <input type="text" id="name" name="name" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="email">Email для связи</label>
+                        <input type="email" id="email" name="email" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="phone">Номер телефона (опционально)</label>
+                        <input type="tel" id="phone" name="phone">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="message">Краткое описание проекта (Музей? Выставка? Офис? Ваш бюджет?)</label>
+                        <textarea id="message" name="message" required></textarea>
+                    </div>
+                    
+                    <button type="submit" class="btn btn-primary" id="submitBtn">
+                        Отправить заявку
+                    </button>
+                </form>
+
+                <div class="contact-info">
+                    <h3>Или свяжитесь с нами напрямую:</h3>
+                    <div class="contact-methods">
+                        <a href="mailto:corob404f@gmail.com" class="contact-method">
+                            <span>Email</span>
+                            <strong>corob404f@gmail.com</strong>
+                        </a>
+                        <a href="https://t.me/F404ROBOTICS" target="_blank" class="contact-method">
+                            <span>Telegram</span>
+                            <strong>@F404ROBOTICS</strong>
+                        </a>
+                        <a href="tel:+79259081025" class="contact-method">
+                            <span>Телефон</span>
+                            <strong>+7 (925) 908-10-25</strong>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>© 2024 CoRob | Robotics. Разработка Лаборатории Когнитивной Робототехники при МГТУ им. Н. Э. Баумана</p>
+        <p>Email: <a href="mailto:corob404f@gmail.com">corob404f@gmail.com</a></p>
+    </footer>
+
+    <script>
+        // Mobile menu functionality
+        const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+        const navLinks = document.querySelector('.nav-links');
+        
+        mobileMenuBtn.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+            mobileMenuBtn.textContent = navLinks.classList.contains('active') ? '✕' : '☰';
+        });
+
+        // Close mobile menu when clicking on a link
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', () => {
+                navLinks.classList.remove('active');
+                mobileMenuBtn.textContent = '☰';
+            });
+        });
+
+        // Navbar scroll effect
+        const navbar = document.getElementById('navbar');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+
+        // Scroll reveal animation
+        function reveal() {
+            const reveals = document.querySelectorAll(".reveal");
+            for (let i = 0; i < reveals.length; i++) {
+                const windowHeight = window.innerHeight;
+                const elementTop = reveals[i].getBoundingClientRect().top;
+                const elementVisible = 150;
+                if (elementTop < windowHeight - elementVisible) {
+                    reveals[i].classList.add("active");
+                }
+            }
+        }
+        window.addEventListener("scroll", reveal);
+        reveal(); // Initial call
+
+        // Form submission
+        const contactForm = document.getElementById('contactForm');
+        const submitBtn = document.getElementById('submitBtn');
+        const successMessage = document.getElementById('successMessage');
+        
+        contactForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Show loading state
+            const originalText = submitBtn.textContent;
+            submitBtn.innerHTML = '<span class="loading"></span> Отправка...';
+            submitBtn.disabled = true;
+            
+            // Simulate form submission
+            setTimeout(() => {
+                // Reset form
+                contactForm.reset();
+                
+                // Show success message
+                successMessage.style.display = 'block';
+                
+                // Reset button
+                submitBtn.textContent = originalText;
+                submitBtn.disabled = false;
+                
+                // Hide success message after 5 seconds
+                setTimeout(() => {
+                    successMessage.style.display = 'none';
+                }, 5000);
+            }, 1500);
+        });
+
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
